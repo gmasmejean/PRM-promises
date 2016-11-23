@@ -33,7 +33,11 @@ prm.prototype._process = function( value, callback, promise ){
     }
 };
 
-prm.prototype.then = function( success, fail, progress ){    
+prm.prototype.then = function( success, fail, progress ){
+    if( !success && !fail && !progress ){
+        return this;    
+    }
+    
     var p = new prm();
         
     if( this._state === prm.pending ){        
@@ -63,6 +67,10 @@ prm.prototype.then = function( success, fail, progress ){
 };
 
 prm.prototype.finally = function( next ){
+    if( !next ){
+        return this;    
+    }
+    
     var p = new prm();
     
     if( this._state === prm.pending ){
